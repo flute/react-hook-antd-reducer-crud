@@ -5,9 +5,6 @@
  * 1. 支持 function 类型的 action
  * 2. 支持 Promise 类型的 action.payload
  * 3. 支持 getState 方法，获取实时 state
- * 参考：
- * https://medium.com/@joseph.michael.sample/async-actions-with-usereducer-d75a2c5dc55c
- * https://medium.com/solute-labs/configuring-thunk-action-creators-and-redux-dev-tools-with-reacts-usereducer-hook-5a1608476812
  */
 import { useReducer, useRef, useCallback } from 'react'
 
@@ -22,7 +19,8 @@ const useEnhancedReducer = (reducer, initialState) => {
   }, [])
 
   const [state, dispatch] = useReducer(reducerWapper, initialState);
-  const getState = () => lastState.current
+
+  const getState = useCallback(() => lastState.current, [])
 
   const enhancedDispatch = useCallback((action) => {
     // 支持 function 类型的 action
